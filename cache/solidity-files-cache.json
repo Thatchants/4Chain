@@ -1,0 +1,329 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "/Users/jgersch/CSU Classes/CS458 Spring 2021/Projects/CryptoZombiesGame2021/contracts/CryptoZombies.sol": {
+      "lastModificationDate": 1613685307243,
+      "contentHash": "bd19eb634c65e3bdd5bf9219921a4859",
+      "sourceName": "contracts/CryptoZombies.sol",
+      "solcConfig": {
+        "version": "0.5.1",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./zombieownership.sol"
+      ],
+      "versionPragmas": [
+        ">=0.5.0 <0.6.0"
+      ],
+      "artifacts": [
+        "CryptoZombies"
+      ]
+    },
+    "/Users/jgersch/CSU Classes/CS458 Spring 2021/Projects/CryptoZombiesGame2021/contracts/zombieownership.sol": {
+      "lastModificationDate": 1613685307249,
+      "contentHash": "5cff962c93b0de9321a93093274b4c3c",
+      "sourceName": "contracts/zombieownership.sol",
+      "solcConfig": {
+        "version": "0.5.1",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./zombieattack.sol",
+        "./erc721.sol",
+        "./safemath.sol"
+      ],
+      "versionPragmas": [
+        ">=0.5.0 <0.6.0"
+      ],
+      "artifacts": [
+        "ZombieOwnership"
+      ]
+    },
+    "/Users/jgersch/CSU Classes/CS458 Spring 2021/Projects/CryptoZombiesGame2021/contracts/zombieattack.sol": {
+      "lastModificationDate": 1613685307246,
+      "contentHash": "b006fe164552a6d6758f45705d5c8445",
+      "sourceName": "contracts/zombieattack.sol",
+      "solcConfig": {
+        "version": "0.5.1",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./zombiehelper.sol"
+      ],
+      "versionPragmas": [
+        ">=0.5.0 <0.6.0"
+      ],
+      "artifacts": [
+        "ZombieAttack"
+      ]
+    },
+    "/Users/jgersch/CSU Classes/CS458 Spring 2021/Projects/CryptoZombiesGame2021/contracts/erc721.sol": {
+      "lastModificationDate": 1613685307243,
+      "contentHash": "7155a007b3daf1b2f3b780fc4769c72c",
+      "sourceName": "contracts/erc721.sol",
+      "solcConfig": {
+        "version": "0.5.1",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.5.0 <0.6.0"
+      ],
+      "artifacts": [
+        "ERC721"
+      ]
+    },
+    "/Users/jgersch/CSU Classes/CS458 Spring 2021/Projects/CryptoZombiesGame2021/contracts/safemath.sol": {
+      "lastModificationDate": 1613685307246,
+      "contentHash": "d389aeacd26877e3954382c22f8a9f6b",
+      "sourceName": "contracts/safemath.sol",
+      "solcConfig": {
+        "version": "0.5.1",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.5.0 <0.6.0"
+      ],
+      "artifacts": [
+        "SafeMath",
+        "SafeMath16",
+        "SafeMath32"
+      ]
+    },
+    "/Users/jgersch/CSU Classes/CS458 Spring 2021/Projects/CryptoZombiesGame2021/contracts/zombiehelper.sol": {
+      "lastModificationDate": 1613685307249,
+      "contentHash": "5197b81feebfe4eb06f985dae28bfab4",
+      "sourceName": "contracts/zombiehelper.sol",
+      "solcConfig": {
+        "version": "0.5.1",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./zombiefeeding.sol"
+      ],
+      "versionPragmas": [
+        ">=0.5.0 <0.6.0"
+      ],
+      "artifacts": [
+        "ZombieHelper"
+      ]
+    },
+    "/Users/jgersch/CSU Classes/CS458 Spring 2021/Projects/CryptoZombiesGame2021/contracts/zombiefeeding.sol": {
+      "lastModificationDate": 1613685307248,
+      "contentHash": "411537e52133f13b06d8318b0d184715",
+      "sourceName": "contracts/zombiefeeding.sol",
+      "solcConfig": {
+        "version": "0.5.1",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./zombiefactory.sol"
+      ],
+      "versionPragmas": [
+        ">=0.5.0 <0.6.0"
+      ],
+      "artifacts": [
+        "KittyInterface",
+        "ZombieFeeding"
+      ]
+    },
+    "/Users/jgersch/CSU Classes/CS458 Spring 2021/Projects/CryptoZombiesGame2021/contracts/zombiefactory.sol": {
+      "lastModificationDate": 1615144028041,
+      "contentHash": "867dad1bac2602422139976369446b48",
+      "sourceName": "contracts/zombiefactory.sol",
+      "solcConfig": {
+        "version": "0.5.1",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ownable.sol",
+        "./safemath.sol"
+      ],
+      "versionPragmas": [
+        ">=0.5.0 <0.6.0"
+      ],
+      "artifacts": [
+        "ZombieFactory"
+      ]
+    },
+    "/Users/jgersch/CSU Classes/CS458 Spring 2021/Projects/CryptoZombiesGame2021/contracts/ownable.sol": {
+      "lastModificationDate": 1613685307245,
+      "contentHash": "dc3caf2e5c7f5201fb684bfef49413a6",
+      "sourceName": "contracts/ownable.sol",
+      "solcConfig": {
+        "version": "0.5.1",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.5.0 <0.6.0"
+      ],
+      "artifacts": [
+        "Ownable"
+      ]
+    }
+  }
+}

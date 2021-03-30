@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/~cs458/zombies2021:/static/css/main.84003e14.chunk.css",
+    "main.js": "/~cs458/zombies2021:/static/js/main.b41f507d.chunk.js",
+    "main.js.map": "/~cs458/zombies2021:/static/js/main.b41f507d.chunk.js.map",
+    "runtime-main.js": "/~cs458/zombies2021:/static/js/runtime-main.bc872b31.js",
+    "runtime-main.js.map": "/~cs458/zombies2021:/static/js/runtime-main.bc872b31.js.map",
+    "static/css/2.79ed2f17.chunk.css": "/~cs458/zombies2021:/static/css/2.79ed2f17.chunk.css",
+    "static/js/2.ead5107c.chunk.js": "/~cs458/zombies2021:/static/js/2.ead5107c.chunk.js",
+    "static/js/2.ead5107c.chunk.js.map": "/~cs458/zombies2021:/static/js/2.ead5107c.chunk.js.map",
+    "index.html": "/~cs458/zombies2021:/index.html",
+    "precache-manifest.ea4a0ebab1d6064a4c33cb540a3dc675.js": "/~cs458/zombies2021:/precache-manifest.ea4a0ebab1d6064a4c33cb540a3dc675.js",
+    "service-worker.js": "/~cs458/zombies2021:/service-worker.js",
+    "static/css/2.79ed2f17.chunk.css.map": "/~cs458/zombies2021:/static/css/2.79ed2f17.chunk.css.map",
+    "static/css/main.84003e14.chunk.css.map": "/~cs458/zombies2021:/static/css/main.84003e14.chunk.css.map",
+    "static/js/2.ead5107c.chunk.js.LICENSE.txt": "/~cs458/zombies2021:/static/js/2.ead5107c.chunk.js.LICENSE.txt",
+    "static/media/semantic.min.css": "/~cs458/zombies2021:/static/media/outline-icons.ef60a4f6.woff"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.bc872b31.js",
+    "static/css/2.79ed2f17.chunk.css",
+    "static/js/2.ead5107c.chunk.js",
+    "static/css/main.84003e14.chunk.css",
+    "static/js/main.b41f507d.chunk.js"
+  ]
+}
