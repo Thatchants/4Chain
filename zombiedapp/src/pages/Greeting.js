@@ -12,20 +12,17 @@ class Greeting extends Component {
     return (
       <div>
         <br />
-        <h2 style={{ color: "DarkRed", textAlign: "center" }}>
+        <h2 style={{ color: "#0075D3", textAlign: "center" }}>
           {" "}
-          Welcome to the CSU <b> CryptoZombies</b> game!
+          Welcome to <b style={{color: "Orange"}}> 4Chain</b>! - A postmodern take on Connect 4 featuring a cryptographic ledger!
         </h2>
         <br />
-        <img src="static/images/zombieLoser2.jpg" style={imgStyle} width="400px" alt="Zombie rising from grave" />
+        <img src="static/images/4Chain_Greeting.png" style={imgStyle} width="200px" alt="Zombie rising from grave" />
         <br /> <br />
         <p style={{ textAlign: "center" }}>
-          This Colorado State University CS458 blockchain game allows you to create one original zombie
-          on the Ethereum blockchain.
-          <br /> Once created, your zombie can eat cryptokitties to create new
-          zombies.
-          <br /> Additionally, your zombie can attack other zombies (you have a
-          70% chance of winning).
+          This blockchain game allows you to play Connect 4 for money using the Ethereum blockchain.
+          <br /> You can play against anyone with an Ethereum address for any amount of Ethereum.
+          <br /> Every game requires both players to put an equal amount of money into the game pool. No need to worry about cheating or getting your money back! If the other player is inactive you will be rewarded with the full prize money.
           <br /> <br /> To get started, select a button from the menu bar above.
         </p>
       </div>

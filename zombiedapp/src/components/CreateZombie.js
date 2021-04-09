@@ -58,7 +58,7 @@ class CreateZombie extends Component {
       <Modal
         trigger={
           <Button primary disabled={createDisabled} onClick={this.handleOpen}>
-            Create Zombie
+            Create Game
           </Button>
         }
         open={this.state.modalOpen}
@@ -83,7 +83,7 @@ class CreateZombie extends Component {
             <Message error header="Oops!" content={this.state.errorMessage} />
             <Button primary type="submit" loading={this.state.loading}>
               <Icon name="check" />
-              Create Zombie
+              Create Game
             </Button>
             <hr />
             <h2>{this.state.message}</h2>

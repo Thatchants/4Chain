@@ -22,35 +22,35 @@ class TopBar extends Component {
   render() {
     return (
       <div>
-        <Menu style={{ marginTop: "10px", backgroundColor: "Salmon" }}>
+        <Menu style={{ marginTop: "10px", backgroundColor: "Orange" }}>
           <Menu.Item>
             <CreateZombie />
           </Menu.Item>
 
           <Menu.Item>
             <Link to={{ pathname: "/myZombieInventory" }}>
-              <Button primary>Show My Zombies</Button>
+              <Button primary>Show My Games</Button>
             </Link>
           </Menu.Item>
 
           <Menu.Item>
             <Link to={{ pathname: "/ZombieInventory" }}>
-              <Button primary>Show All Zombies</Button>
+              <Button primary>Show All Games</Button>
             </Link>
           </Menu.Item>
 
           <Menu.Item position="right">
             <Link to={{ pathname: "/" }}>
-              <Header size="large">CryptoZombies at CSU!!! </Header>
+              <Header size="large">4Chain</Header>
             </Link>
           </Menu.Item>
         </Menu>
         <div className="center">
-          <h2>The most awesome zombies in the whole wide universe!</h2>
+          <h2>Greatest game ever!</h2>
         </div>
         Your account address: {this.props.userAddress}
         <br />
-        You own {this.props.userZombieCount} zombie(s) out of a total of approximately {this.props.totalZombieCount}.
+        You are currently playing {this.props.userZombieCount} game(s) of Connect 4!
         <hr />
       </div>
     );
