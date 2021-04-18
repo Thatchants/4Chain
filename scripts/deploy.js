@@ -9,10 +9,10 @@ async function main() {
 
     console.log("Account balance:", (await deployer.getBalance()).toString());
 
-    const CZF = await ethers.getContractFactory("CryptoZombies");
-    const CZ = await CZF.deploy();
+    const FCF = await ethers.getContractFactory("FourChain");
+    const FC = await FCF.deploy();
 
-    console.log("CryptoZombies contract address:", CZ.address);
+    console.log("4Chain contract address:", FC.address);
 }
 
 main()
@@ -21,6 +21,9 @@ main()
         console.error(error);
         process.exit(1);
     });
+
+
+// VVVVV These will change when 4chain is deployed VVVVVVV
 
 /*
 
