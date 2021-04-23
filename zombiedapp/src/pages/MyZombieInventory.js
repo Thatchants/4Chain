@@ -6,7 +6,7 @@ import ZombieCard from "../components/zombieCard";
 function mapStateToProps(state) {
   return {
     CZ: state.CZ,
-    userZombieCount: state.userZombieCount,
+    userGameCount: state.userGameCount,
     userAddress: state.userAddress
   };
 }
@@ -15,7 +15,7 @@ class MyZombieInventory extends Component {
   state = {
     ZombieTable: [],
     activePage: 1,
-    totalPages: Math.ceil(this.props.userZombieCount / 9)
+    totalPages: Math.ceil(this.props.userGameCount / 9)
   };
 
   componentDidMount = async () => {
