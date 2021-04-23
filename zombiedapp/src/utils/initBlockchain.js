@@ -1,4 +1,4 @@
-import CryptoZombiesContract from "../contract_ABI/CryptoZombies.sol/CryptoZombies.json";
+import FourChain from "../contract_ABI/FourChain.sol/FourChain.json";
 import store from "../redux/store";
 import { ethers } from "ethers";
 
