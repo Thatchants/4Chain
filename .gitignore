@@ -1,1 +1,3 @@
 zombiedapp/node_modules/.cache/
+build/contracts
+build/build-info
