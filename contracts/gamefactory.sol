@@ -17,8 +17,8 @@ contract GameFactory is Ownable {
     uint256 gamesMade = 0;
     uint expirationTime = 1 weeks;
 
-    mapping (address => uint256[]) playerToKey;
-    mapping (uint256 => Game) keyToGame;
+    mapping (address => uint256[]) public playerToKey;
+    mapping (uint256 => Game) public keyToGame;
 
     event NewInvite(uint256 id, address player1, address player2);
     event GameForfeited(uint256 id, address player1, address player2);
@@ -50,6 +50,11 @@ contract GameFactory is Ownable {
         require(theGame.turn == 0);
         _;
     }
+    
+    modifier notAgainstSelf(address opponent) {
+        require(msg.sender != opponent, "You cannot play against yourself.");
+        _;
+    }
 
     modifier expired(uint256 key) {
         Game storage theGame = keyToGame[key];
@@ -62,7 +67,7 @@ contract GameFactory is Ownable {
         expirationTime = _seconds;
     }
 
-    function createGame(address opponent) external payable {
+    function createGame(address opponent) external payable notAgainstSelf(opponent){
         uint256 key = SafeMath.add(gamesMade, 1);
         gamesMade = key;
         playerToKey[msg.sender].push(key);
