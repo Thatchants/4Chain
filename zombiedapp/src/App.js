@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import initBlockchain from "./utils/initBlockchain";
-import getZombieCount from "./utils/getZombieCount";
+import getGameCount from "./utils/getGameCount";
 
 import { HashRouter, Route } from "react-router-dom";
 import { Container } from "semantic-ui-react";
@@ -36,7 +36,7 @@ class App extends Component {
     componentDidMount = async () => {
       try {
           const CZInfo = await initBlockchain(); // from utils directory;  connect to provider and to metamask or other signer
-          await getZombieCount(CZInfo.CZ, CZInfo.userAddress); // get user count and total count of zombies
+          await getGameCount(CZInfo.CZ); // get user count and total count of zombies
       } catch (error) {
           // Catch any errors for any of the above operations.
           alert(`Failed to load provider, signer, or contract. Check console for details.`);

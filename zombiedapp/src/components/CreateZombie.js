@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import getZombieCount from "../utils/getZombieCount";
+import getGameCount from "../utils/getGameCount";
 import { connect } from "react-redux";
 
 import { Button, Header, Icon, Modal, Form, Message } from "semantic-ui-react";
@@ -8,14 +8,14 @@ function mapStateToProps(state) {
     return {
         CZ: state.CZ,
         userAddress: state.userAddress,
-        userZombieCount: state.userZombieCount
+        userGameCount: state.userGameCount
     };
 }
 
 
-// Create a new Zombie
+// Create a new Game
 
-class CreateZombie extends Component {
+class CreateGame extends Component {
   state = {
     modalOpen: false,
     value: "",
@@ -36,43 +36,42 @@ class CreateZombie extends Component {
       message: "waiting for blockchain transaction to complete..."
     });
     try {
-      await this.props.CZ.createRandomZombie(this.state.value) // contains the zombie name
+      await this.props.CZ.createGame(this.state.value) // contains the opponent's address
       this.setState({
         loading: false,
-        message: "You have created a New Zombie"
+        message: "You have sent out a new game invite"
       });
-      getZombieCount(this.props.CZ, this.props.userAddress);
+      getGameCount(this.props.CZ);
     } catch (err) {
       this.setState({
         loading: false,
         errorMessage: err.message,
-        message: "User rejected transaction or else this account is already in use, please try another name."
+        message: "User rejected transaction or else this account is already in use, please try another address."
       });
     }
   };
 
 
   render() {
-    let createDisabled = (this.props.userZombieCount !== 0);
       return (
       <Modal
         trigger={
-          <Button primary disabled={createDisabled} onClick={this.handleOpen}>
+          <Button primary onClick={this.handleOpen}>
             Create Game
           </Button>
         }
         open={this.state.modalOpen}
         onClose={this.handleClose}
       >
-        <Header icon="browser" content="Create a New Zombie" />
+        <Header icon="browser" content="Create a New Game" />
         <Modal.Content>
-          <img src="static/images/zombieWarrior.jpg" alt="zombie warrior" /><Header>Be sure to give your zombie a WORTHY name!!!</Header>
+          <img src="static/images/4Chain_Greeting.png" alt="kids enjoying the power of blockchain" /><Header>Gambling is endorsed by Dr.Gersch!!!</Header>
           <br /> <br />
           <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
             <Form.Field>
-              <label>Zombie Name</label>
+              <label>Opponent Address</label>
               <input
-                placeholder="Name"
+                placeholder="Opponent Address (0x....)"
                 onChange={event =>
                   this.setState({
                     value: event.target.value
@@ -99,4 +98,4 @@ class CreateZombie extends Component {
   }
 }
 
-export default connect(mapStateToProps)(CreateZombie);
+export default connect(mapStateToProps)(CreateGame);

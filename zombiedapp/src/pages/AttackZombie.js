@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Button, Header, Icon, Form, Message } from "semantic-ui-react";
 import ZombieCard from "../components/zombieCard";
-import getZombieCount from "../utils/getZombieCount";
+import getGameCount from "../utils/getGameCount";
 
 function mapStateToProps(state) {
   return {
@@ -54,7 +54,7 @@ class AttackZombie extends Component {
           loading: false,
           message: "Battle complete.  YOU WON!!!!"
         });
-        getZombieCount(this.props.CZ, this.props.userAddress);
+        getGameCount(this.props.CZ);
       } else {
         this.setState({
           loading: false,

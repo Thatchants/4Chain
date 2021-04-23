@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Button, Icon, Form, Message } from "semantic-ui-react";
 import ZombieCard from "../components/zombieCard";
-import getZombieCount from "../utils/getZombieCount";
+import getGameCount from "../utils/getGameCount";
 
 function mapStateToProps(state) {
   return {
@@ -58,7 +58,7 @@ class FeedOnKitty extends Component {
         loading: false,
         message: "You have eaten a poor innocent CryptoKitty.   Buuuuurrrrpp!!!"
       });
-      getZombieCount(this.props.CZ, this.props.userAddress);
+      getGameCount(this.props.CZ);
     } catch (err) {
       this.setState({
         loading: false,

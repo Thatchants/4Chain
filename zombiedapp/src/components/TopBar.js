@@ -11,12 +11,11 @@ import { Menu, Header } from "semantic-ui-react";
 function mapStateToProps(state) {
   return {
     userAddress: state.userAddress,
-    userZombieCount: state.userZombieCount,
-    totalZombieCount: state.totalZombieCount
+    userGameCount: state.userGameCount
   };
 }
 
-// This renders the topbar on the webpage as well as the lines listing address and zombie count.
+// This renders the topbar on the webpage as well as the lines listing address and game count.
 
 class TopBar extends Component {
   render() {
@@ -50,7 +49,7 @@ class TopBar extends Component {
         </div>
         Your account address: {this.props.userAddress}
         <br />
-        You are currently playing {this.props.userZombieCount} game(s) of Connect 4!
+        You are currently playing {this.props.userGameCount} game(s) of Connect 4!
         <hr />
       </div>
     );
