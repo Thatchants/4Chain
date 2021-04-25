@@ -45,214 +45,295 @@ const initBlockchain = async () => {
     console.log("READ ABI");
     //const abi = JSON.parse(CryptoZombiesContract.abi);
     const abi = JSON.parse(`[
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "name": "opponent",
-              "type": "address"
-            }
-          ],
-          "name": "createGame",
-          "outputs": [],
-          "payable": true,
-          "stateMutability": "payable",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "name": "key",
-              "type": "uint256"
-            },
-            {
-              "name": "moveCol",
-              "type": "uint8"
-            }
-          ],
-          "name": "play",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [],
-          "name": "renounceOwnership",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "owner",
-          "outputs": [
-            {
-              "name": "",
-              "type": "address"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "isOwner",
-          "outputs": [
-            {
-              "name": "",
-              "type": "bool"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "name": "key",
-              "type": "uint256"
-            },
-            {
-              "name": "moveCol",
-              "type": "uint8"
-            }
-          ],
-          "name": "accept",
-          "outputs": [],
-          "payable": true,
-          "stateMutability": "payable",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "name": "_seconds",
-              "type": "uint256"
-            }
-          ],
-          "name": "setExpirationTime",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "name": "key",
-              "type": "uint256"
-            }
-          ],
-          "name": "claimForfeit",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "constant": true,
-          "inputs": [],
-          "name": "getGameCount",
-          "outputs": [
-            {
-              "name": "count",
-              "type": "uint256"
-            }
-          ],
-          "payable": false,
-          "stateMutability": "view",
-          "type": "function"
-        },
-        {
-          "constant": false,
-          "inputs": [
-            {
-              "name": "newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "transferOwnership",
-          "outputs": [],
-          "payable": false,
-          "stateMutability": "nonpayable",
-          "type": "function"
-        },
-        {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "id",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "name": "player1",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "player2",
-              "type": "address"
-            }
-          ],
-          "name": "NewInvite",
-          "type": "event"
-        },
-        {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": false,
-              "name": "id",
-              "type": "uint256"
-            },
-            {
-              "indexed": false,
-              "name": "player1",
-              "type": "address"
-            },
-            {
-              "indexed": false,
-              "name": "player2",
-              "type": "address"
-            }
-          ],
-          "name": "GameForfeited",
-          "type": "event"
-        },
-        {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "name": "previousOwner",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "name": "newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferred",
-          "type": "event"
-        }
-      ]`);
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "name": "",
+            "type": "address"
+          },
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "name": "playerToKey",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "opponent",
+            "type": "address"
+          }
+        ],
+        "name": "createGame",
+        "outputs": [],
+        "payable": true,
+        "stateMutability": "payable",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "key",
+            "type": "uint256"
+          },
+          {
+            "name": "moveCol",
+            "type": "uint8"
+          }
+        ],
+        "name": "play",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [],
+        "name": "renounceOwnership",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "owner",
+        "outputs": [
+          {
+            "name": "",
+            "type": "address"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "isOwner",
+        "outputs": [
+          {
+            "name": "",
+            "type": "bool"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "key",
+            "type": "uint256"
+          },
+          {
+            "name": "moveCol",
+            "type": "uint8"
+          }
+        ],
+        "name": "accept",
+        "outputs": [],
+        "payable": true,
+        "stateMutability": "payable",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "_seconds",
+            "type": "uint256"
+          }
+        ],
+        "name": "setExpirationTime",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "key",
+            "type": "uint256"
+          }
+        ],
+        "name": "claimForfeit",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "name": "keyToGame",
+        "outputs": [
+          {
+            "name": "key",
+            "type": "uint256"
+          },
+          {
+            "name": "player1",
+            "type": "address"
+          },
+          {
+            "name": "player2",
+            "type": "address"
+          },
+          {
+            "name": "turn",
+            "type": "uint8"
+          },
+          {
+            "name": "pot",
+            "type": "uint256"
+          },
+          {
+            "name": "lastPlayedTimestamp",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
+        "name": "getGameCount",
+        "outputs": [
+          {
+            "name": "count",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "newOwner",
+            "type": "address"
+          }
+        ],
+        "name": "transferOwnership",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "name": "gameId",
+            "type": "uint256"
+          }
+        ],
+        "name": "getGameState",
+        "outputs": [
+          {
+            "name": "state",
+            "type": "bytes"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "name": "player1",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "name": "player2",
+            "type": "address"
+          }
+        ],
+        "name": "NewInvite",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "name": "player1",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "name": "player2",
+            "type": "address"
+          }
+        ],
+        "name": "GameForfeited",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "name": "previousOwner",
+            "type": "address"
+          },
+          {
+            "indexed": true,
+            "name": "newOwner",
+            "type": "address"
+          }
+        ],
+        "name": "OwnershipTransferred",
+        "type": "event"
+      }
+    ]`);
 
    // CZ = new ethers.Contract('0xf01b5d859b2a73DBE407f4553b06ffF50F19b7e4', abi, signer);
-    CZ = new ethers.Contract('0xff7e4Eb7279849591D3CE8071cD0d92A3166C999', abi, signer);
+    CZ = new ethers.Contract('0x5F4188810b690D180468a9a2c1370e7b422632c7', abi, signer);
     // put state data into the REDUX store for easy access from other pages and components
 
     let data = { provider, signer, CZ, userAddress };

@@ -17,14 +17,15 @@ class ActionButton extends Component {
   };
 
   render() {
-    const zombieData = {
-      zombieName: this.truncate(this.props.data.zombieName, 8, 8),
-      zombieId: this.props.data.zombieId,
-      zombieDNA: this.props.data.zombieDNA,
-      zombieLevel: this.props.data.zombieLevel,
-      zombieReadyTime: this.props.data.zombieReadyTime,
-      zombieWinCount: this.props.data.zombieWinCount,
-      zombieLossCount: this.props.data.zombieLossCount
+    const gameData = {
+      gameNumber: this.props.data.gameNumber,
+      player1: this.props.data.player1,
+      player2: this.props.data.player2,
+      turn: this.props.data.turn,
+      pot: this.props.data.pot,
+      lastPlay: this.props.data.lastPlay,
+      boardState: this.props.data.boardState,
+      isPlayer1: this.props.data.isPlayer1
     };
 
     const pathName = this.props.pathname;
@@ -35,7 +36,7 @@ class ActionButton extends Component {
       <Link
         to={{
           pathname:  pathName ,
-          state:  zombieData
+          state:  gameData
         }}
       >
         <Button primary disabled={this.props.disableMe}> {buttonLabel} </Button>
