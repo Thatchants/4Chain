@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Card, Grid, Input, Segment, Pagination } from "semantic-ui-react";
 import { connect } from "react-redux";
-import ZombieCard from "../components/zombieCard";
+import GameCard from "../components/GameCard";
+import {parseBoard} from "../utils/parseBoardState";
 
 function mapStateToProps(state) {
   return {
@@ -11,66 +12,67 @@ function mapStateToProps(state) {
   };
 }
 
-class MyZombieInventory extends Component {
+class MyGameInventory extends Component {
   state = {
-    ZombieTable: [],
+    gameTable: [],
     activePage: 1,
     totalPages: Math.ceil(this.props.userGameCount / 9)
   };
 
   componentDidMount = async () => {
-    await this.makeZombieCards();
+    await this.makeGameCards();
   };
 
   onChange = async (e, pageInfo) => {
     await this.setState({ activePage: pageInfo.activePage });
-    this.makeZombieCards();
+    this.makeGameCards();
   };
 
   handleInputChange = async (e, { value }) => {
     await this.setState({ activePage: value });
-    this.makeZombieCards();
+    this.makeGameCards();
   };
-  makeZombieCards = async () => {
-    const myZombies = await this.props.CZ.getZombiesByOwner(this.props.userAddress);
-    let zombieTable = [];
+
+  makeGameCards = async () => {
+    let gameTable = [];
     for (
       var i = this.state.activePage * 9 - 9;
       i < this.state.activePage * 9;
       i++
     ) {
       try {
-        let z = myZombies[i];
-        let zombie = await this.props.CZ.zombies(z);
-        let myDate = new Date(zombie.readyTime * 1000).toLocaleString();
-        zombieTable.push(
-          <ZombieCard
-            key={z}
-            zombieId={z.toString()}
-            zombieName={zombie.name}
-            zombieDNA={zombie.dna.toString()}
-            zombieLevel={zombie.level}
-            zombieReadyTime={myDate}
-            zombieWinCount={zombie.winCount}
-            zombieLossCount={zombie.lossCount}
-            zombieOwner={this.props.userAddress}
-            myOwner={true}
+        let id = await this.props.CZ.playerToKey(this.props.userAddress, i);
+        id = parseInt(id);
+        let game = await this.props.CZ.keyToGame(id);
+        let data = await this.props.CZ.getGameState(id);
+        let board = parseBoard(data);
+        let lastPlay = new Date(game.lastPlayedTimestamp * 1000).toLocaleString();
+        gameTable.push(
+          <GameCard
+            key={id}
+            gameNumber={id}
+            player1={game.player1}
+            player2={game.player2}
+            turn={game.turn}
+            pot={game.pot.toString()}
+            lastPlay={lastPlay}
+            boardState={board}
+            isPlayer1={game.player1 == this.props.userAddress}
           />
         );
       } catch {
         break;
       }
     }
-    this.setState({ zombieTable });
+    this.setState({ gameTable });
   };
 
   render() {
     return (
       <div>
         <hr />
-        <h2> Your Zombie Inventory </h2>
-        The zombies you own have a yellow background; clicking anywhere on a
-        yellow card will bring up a list of actions you can perform.
+        <h2> Your Active Games </h2>
+        Clicking anywhere on a card will bring up a list of actions you can perform.
         <hr />
         <Grid columns={2} verticalAlign="middle">
           <Grid.Column>
@@ -94,10 +96,10 @@ class MyZombieInventory extends Component {
           </Grid.Column>
         </Grid>
         <br /> <br />
-        <Card.Group> {this.state.zombieTable} </Card.Group>
+        <Card.Group> {this.state.gameTable} </Card.Group>
       </div>
     );
   }
 }
 
-export default connect(mapStateToProps)(MyZombieInventory);
+export default connect(mapStateToProps)(MyGameInventory);

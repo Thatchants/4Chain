@@ -6,7 +6,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Button, Icon, Form, Message } from "semantic-ui-react";
-import ZombieCard from "../components/zombieCard";
+import ZombieCard from "../components/GameCard";
 import getGameCount from "../utils/getGameCount";
 
 function mapStateToProps(state) {
@@ -76,7 +76,7 @@ class FeedOnKitty extends Component {
         <table>
           <tr>
             <th>
-              <ZombieCard
+              {/* <ZombieCard
                 zombieId={this.state.hungryZombieId}
                 zombieName={this.props.location.state.zombieName}
                 zombieDNA={this.props.location.state.zombieDNA}
@@ -86,7 +86,7 @@ class FeedOnKitty extends Component {
                 zombieLossCount={this.props.location.state.zombieLossCount}
                 zombieOwner={this.props.userAddress}
                 myOwner={false}
-              />
+              /> */}
             </th>
             <th>
               <img src={this.state.kittyImage} width="400px" alt="CryptoKitty Victim" />

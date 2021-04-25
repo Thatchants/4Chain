@@ -4,7 +4,6 @@ const { deployContract } = waffle;
 const provider = waffle.provider;
 const time = require("./helpers/time");
 
-
 describe("FourChain", function () {
 
     const gameIds = [1, 2, 3];
@@ -43,6 +42,9 @@ describe("FourChain", function () {
             await expect(FCInstance.createGame(steve.address))
                 .to.emit(FCInstance, 'NewInvite')
                 .withArgs(2, alice.address, steve.address);
+        });
+        it("Should not be able to play against self", async () => {
+            await expect(FCInstance.createGame(alice.address)).to.be.reverted;
         });
     });
 
@@ -88,6 +90,31 @@ describe("FourChain", function () {
             await FCInstance.createGame(bob.address, {value: 200});
             await expect(FCInstance.connect(bob).accept(gameIds[0], 1, {value: 50})).to.be.reverted;
             expect(await provider.getBalance(FCInstance.address)).to.equal(200);
+        });
+    });
+
+    describe("Accessing game data", function () {
+        it("Should be able to get gameId from mapping", async () => {
+            await FCInstance.createGame(bob.address);
+            await expect(await FCInstance.playerToKey(alice.address, 0)).to.equal(gameIds[0]);
+            await expect(await FCInstance.playerToKey(bob.address, 0)).to.equal(gameIds[0]);
+        });
+        it("Should be able to get turn", async () => {
+            await FCInstance.createGame(bob.address);
+            let g = await FCInstance.keyToGame(gameIds[0]);
+            await expect(g.turn).to.equal(0);
+            // play the next turn
+            await FCInstance.connect(bob).accept(gameIds[0], 1, {value: 50});
+            g = await FCInstance.keyToGame(gameIds[0]);
+            await expect(g.turn).to.equal(1);
+        });
+        it("Should be able to get board bits", async () => {
+            await FCInstance.createGame(bob.address);
+            let gs = await FCInstance.getGameState(gameIds[0]);
+            let hex_chars = 2;
+            let int_size = 64;
+            let board_slots = 42;
+            expect(gs.length).to.equal(int_size * board_slots + hex_chars);
         });
     });
 

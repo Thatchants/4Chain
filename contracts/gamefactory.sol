@@ -119,4 +119,9 @@ contract GameFactory is Ownable {
     function getGameCount() external view returns (uint256 count) {
         return playerToKey[msg.sender].length;
     }
+
+    function getGameState(uint256 gameId) public view returns (bytes memory state) {
+        Game memory _game = keyToGame[gameId];
+        state = abi.encodePacked(_game.board);
+    }
 }
