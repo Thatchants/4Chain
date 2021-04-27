@@ -39,7 +39,7 @@ class GameDisplay extends Component {
       if ((this.props.location.state.isPlayer2 && this.props.location.state.turn === 0)) {
         await this.props.CZ.accept(this.props.location.state.gameNumber, val, {value: parseInt(this.props.location.state.pot)})
       } else {
-        await this.props.CZ.play(this.props.location.state.gameNumber, val)
+        await this.props.CZ.move(this.props.location.state.gameNumber, val)
       }
       this.setState({
         loading: false,

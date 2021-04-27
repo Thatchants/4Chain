@@ -326,10 +326,14 @@ const initBlockchain = async () => {
             "name": "newOwner",
             "type": "address"
           }
-        ]`);
+        ],
+        "name": "OwnershipTransferred",
+        "type": "event"
+      }
+    ]`);
 
    // CZ = new ethers.Contract('0xf01b5d859b2a73DBE407f4553b06ffF50F19b7e4', abi, signer);
-    CZ = new ethers.Contract('0x5F4188810b690D180468a9a2c1370e7b422632c7', abi, signer);
+    CZ = new ethers.Contract('0xf2702354298bCC382300712Ffd535109e2B52FeF', abi, signer);
     // put state data into the REDUX store for easy access from other pages and components
 
     let data = { provider, signer, CZ, userAddress };
