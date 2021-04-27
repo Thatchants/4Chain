@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Grid, Input, Segment, Pagination } from "semantic-ui-react";
+import { Card, Grid, Input, Segment, Pagination, Icon, Button } from "semantic-ui-react";
 import { connect } from "react-redux";
 import GameCard from "../components/GameCard";
 import {parseBoard} from "../utils/parseBoardState";
@@ -16,7 +16,8 @@ class MyGameInventory extends Component {
   state = {
     gameTable: [],
     activePage: 1,
-    totalPages: Math.ceil(this.props.userGameCount / 9)
+    totalPages: Math.ceil(this.props.userGameCount / 9),
+    refreshLoading: false
   };
 
   componentDidMount = async () => {
@@ -32,6 +33,12 @@ class MyGameInventory extends Component {
     await this.setState({ activePage: value });
     this.makeGameCards();
   };
+
+  onRefresh = async () => {
+    await this.setState({ refreshLoading: true});
+    await this.makeGameCards();
+    await this.setState({ refreshLoading: false});
+  }
 
   makeGameCards = async () => {
     let gameTable = [];
@@ -58,6 +65,7 @@ class MyGameInventory extends Component {
             lastPlay={lastPlay}
             boardState={board}
             isPlayer1={game.player1 == this.props.userAddress}
+            isPlayer2={game.player2 == this.props.userAddress}
           />
         );
       } catch {
@@ -70,10 +78,25 @@ class MyGameInventory extends Component {
   render() {
     return (
       <div>
+        <Grid columns='equal'>
+          <Grid.Row style={{paddingBottom:0}}>
+            <Grid.Column width={10}>
+              <h2> Your Active Games </h2>
+            </Grid.Column>
+            <Grid.Column textAlign='right'>
+              <Button primary circular loading={this.state.refreshLoading} icon='sync' onClick={this.onRefresh}/>
+            </Grid.Column>
+          </Grid.Row>
+          
+          <Grid.Row style={{paddingTop:0}}>
+            <Grid.Column>
+              Clicking anywhere on a card will bring up a list of actions you can perform. It is your turn in games with green cards.
+            </Grid.Column>
+          </Grid.Row>
+          
+        </Grid>
         <hr />
-        <h2> Your Active Games </h2>
-        Clicking anywhere on a card will bring up a list of actions you can perform.
-        <hr />
+        
         <Grid columns={2} verticalAlign="middle">
           <Grid.Column>
             <Segment secondary>

@@ -25,7 +25,8 @@ class ActionButton extends Component {
       pot: this.props.data.pot,
       lastPlay: this.props.data.lastPlay,
       boardState: this.props.data.boardState,
-      isPlayer1: this.props.data.isPlayer1
+      isPlayer1: this.props.data.isPlayer1,
+      isPlayer2: this.props.data.isPlayer2
     };
 
     const pathName = this.props.pathname;
