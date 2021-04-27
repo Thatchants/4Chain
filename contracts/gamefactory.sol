@@ -27,9 +27,9 @@ contract GameFactory is Ownable {
     modifier isTheirTurn(uint256 key) {
         Game storage theGame = keyToGame[key];
         if (theGame.turn % 2 == 0) {
-            require(msg.sender == theGame.player2);
+            require(msg.sender == theGame.player2, "Must be used on your turn.");
         } else {
-            require(msg.sender == theGame.player1);
+            require(msg.sender == theGame.player1, "Must be used on your turn.");
         }
         _;
     }
@@ -38,16 +38,16 @@ contract GameFactory is Ownable {
     modifier isNotTurn(uint256 key) {
         Game storage theGame = keyToGame[key];
         if (theGame.turn % 2 == 1) {
-            require(msg.sender == theGame.player2, "Player 1's turn.");
+            require(msg.sender == theGame.player2, "Cannot be used on your turn.");
         } else {
-            require(msg.sender == theGame.player1, "Player 2's turn.");
+            require(msg.sender == theGame.player1, "Cannot be used on your turn.");
         }
         _;
     }
 
     modifier isNotStart(uint256 key) {
         Game storage theGame = keyToGame[key];
-        require(theGame.turn == 0);
+        require(theGame.turn != 0, "Cannot be used on the first turn.");
         _;
     }
     
@@ -105,7 +105,11 @@ contract GameFactory is Ownable {
         delete keyToGame[key];
     }
 
-    function play(uint256 key, uint8 moveCol) public isTheirTurn(key) isNotStart(key) {
+    function move(uint256 key, uint8 moveCol) external isTheirTurn(key) isNotStart(key) {
+        play(key, moveCol);
+    }
+
+    function play(uint256 key, uint8 moveCol) internal {
         keyToGame[key].turn++;
         
 
