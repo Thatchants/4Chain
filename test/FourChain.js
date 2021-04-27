@@ -86,6 +86,13 @@ describe("FourChain", function () {
             await FCInstance.connect(bob).accept(gameIds[0], 1, {value: 50});
             expect(await provider.getBalance(FCInstance.address)).to.equal(100);
         });
+        it("First player should be able to play after game accepted", async () => {
+            await FCInstance.createGame(bob.address, {value: 50});
+            await FCInstance.connect(bob).accept(gameIds[0], 1, {value: 50});
+            await FCInstance.move(gameIds[0], 1);
+            let g = await FCInstance.keyToGame(gameIds[0]);
+            await expect(g.turn).to.equal(2);
+        });
         it("Second player with less than pot should not be able to accept", async () => {
             await FCInstance.createGame(bob.address, {value: 200});
             await expect(FCInstance.connect(bob).accept(gameIds[0], 1, {value: 50})).to.be.reverted;

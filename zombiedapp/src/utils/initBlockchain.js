@@ -72,20 +72,6 @@ const initBlockchain = async () => {
         "constant": false,
         "inputs": [
           {
-            "name": "opponent",
-            "type": "address"
-          }
-        ],
-        "name": "createGame",
-        "outputs": [],
-        "payable": true,
-        "stateMutability": "payable",
-        "type": "function"
-      },
-      {
-        "constant": false,
-        "inputs": [
-          {
             "name": "key",
             "type": "uint256"
           },
@@ -94,10 +80,24 @@ const initBlockchain = async () => {
             "type": "uint8"
           }
         ],
-        "name": "play",
+        "name": "move",
         "outputs": [],
         "payable": false,
         "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "opponent",
+            "type": "address"
+          }
+        ],
+        "name": "createGame",
+        "outputs": [],
+        "payable": true,
+        "stateMutability": "payable",
         "type": "function"
       },
       {
@@ -333,7 +333,7 @@ const initBlockchain = async () => {
     ]`);
 
    // CZ = new ethers.Contract('0xf01b5d859b2a73DBE407f4553b06ffF50F19b7e4', abi, signer);
-    CZ = new ethers.Contract('0x5F4188810b690D180468a9a2c1370e7b422632c7', abi, signer);
+    CZ = new ethers.Contract('0xf2702354298bCC382300712Ffd535109e2B52FeF', abi, signer);
     // put state data into the REDUX store for easy access from other pages and components
 
     let data = { provider, signer, CZ, userAddress };

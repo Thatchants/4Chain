@@ -34,7 +34,7 @@ class GameCard extends Component {
     );
 
       return (
-        <Card style={{ backgroundColor: (this.props.turn % 2 === 0 && this.props.isPlayer1) ? "LightYellow" : "LightGreen" }} raised>
+        <Card style={{ backgroundColor: ((this.props.turn % 2 === 1 && this.props.isPlayer1) || (this.props.turn % 2 === 0 && this.props.isPlayer2)) ? "LightGreen" : "LightYellow" }} raised>
           <ReactTooltip delayShow={400} />
 
           <a
