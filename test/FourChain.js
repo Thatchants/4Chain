@@ -124,5 +124,23 @@ describe("FourChain", function () {
             expect(gs.length).to.equal(int_size * board_slots + hex_chars);
         });
     });
+    
+    describe("Valid Move Checking", function () {
+        it("Should not be able to play outside of board.", async () => {
+            await FCInstance.createGame(bob.address, {value: 50});
+            await FCInstance.connect(bob).accept(gameIds[0], 1, {value: 50});
+            await expect(FCInstance.move(gameIds[0], 7)).to.be.reverted;
+        });
+        it("Should not be able to play more than 6 times in one column.", async () => {
+            await FCInstance.createGame(bob.address, {value: 50});
+            await FCInstance.connect(bob).accept(gameIds[0], 6, {value: 50});
+            await FCInstance.move(gameIds[0], 6, { from: alice.address });
+            await FCInstance.connect(bob).move(gameIds[0], 6, { from: bob.address });
+            await FCInstance.move(gameIds[0], 6, { from: alice.address });
+            await FCInstance.connect(bob).move(gameIds[0], 6, { from: bob.address });
+            await FCInstance.move(gameIds[0], 6, { from: alice.address });
+            await expect(FCInstance.connect(bob).move(gameIds[0], 6, { from: bob.address })).to.be.reverted;
+        });
+    });
 
 })

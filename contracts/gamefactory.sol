@@ -11,7 +11,7 @@ contract GameFactory is Ownable {
         uint8 turn;
         uint256 pot;
         uint256 lastPlayedTimestamp;
-        uint8[6][7] board;
+        uint8[7][6] board;
     }
 
     uint256 gamesMade = 0;
@@ -72,13 +72,12 @@ contract GameFactory is Ownable {
         gamesMade = key;
         playerToKey[msg.sender].push(key);
         playerToKey[opponent].push(key);
-        keyToGame[key] = Game(key, msg.sender, opponent, 0, msg.value, now, [[0,0,0,0,0,0],
-                                                                    [0,0,0,0,0,0],
-                                                                    [0,0,0,0,0,0],
-                                                                    [0,0,0,0,0,0],
-                                                                    [0,0,0,0,0,0],
-                                                                    [0,0,0,0,0,0],
-                                                                    [0,0,0,0,0,0]]);
+        keyToGame[key] = Game(key, msg.sender, opponent, 0, msg.value, now, [[0,0,0,0,0,0,0],
+                                                                    [0,0,0,0,0,0,0],
+                                                                    [0,0,0,0,0,0,0],
+                                                                    [0,0,0,0,0,0,0],
+                                                                    [0,0,0,0,0,0,0],
+                                                                    [0,0,0,0,0,0,0]]);
         emit NewInvite(key, msg.sender, opponent);
     }
 
@@ -104,8 +103,15 @@ contract GameFactory is Ownable {
         emit GameForfeited(theGame.key, theGame.player1, theGame.player2);
         delete keyToGame[key];
     }
+    
+    modifier validMove(uint256 key, uint8 moveCol) {
+        require(moveCol < 7, "There are only 7 columns. Columns 0-6");
+        Game storage theGame = keyToGame[key];
+        require(theGame.board[0][moveCol] == 0, "That column is full.");
+        _;
+    }
 
-    function move(uint256 key, uint8 moveCol) external isTheirTurn(key) isNotStart(key) {
+    function move(uint256 key, uint8 moveCol) external isTheirTurn(key) isNotStart(key) validMove(key, moveCol){
         play(key, moveCol);
     }
 
@@ -115,7 +121,23 @@ contract GameFactory is Ownable {
 
         // here use moveCol to play a token in a certain col, type based on whose turn it is
         // npx hardhat compile currently produces a warning since moveCol is currently unused
+        Game storage theGame = keyToGame[key];
+        uint8 value = 1;
+        if (msg.sender == theGame.player2){
+            value = 2;
+        }
+        if(theGame.board[5][moveCol]==0) {theGame.board[5][moveCol]=value;}
+        else if(theGame.board[4][moveCol]==0) {theGame.board[4][moveCol]=value;}
+        else if(theGame.board[3][moveCol]==0) {theGame.board[3][moveCol]=value;}
+        else if(theGame.board[2][moveCol]==0) {theGame.board[2][moveCol]=value;}
+        else if(theGame.board[1][moveCol]==0) {theGame.board[1][moveCol]=value;}
+        else {theGame.board[0][moveCol]=value;}
 
+        //calculate moveRow (first available row. Start with theGame.board[6][moveCol] as that is the bottom then [5] [4]...[0])
+        //check horizontal
+        //check vertical
+        //check top left to bottom right diagonal if possible
+        //check top right to bottom left diagonal if possible
 
         keyToGame[key].lastPlayedTimestamp = now;
     }
