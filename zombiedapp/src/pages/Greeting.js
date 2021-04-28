@@ -17,7 +17,7 @@ class Greeting extends Component {
           Welcome to <b style={{color: "Orange"}}> 4Chain</b>! - A postmodern take on Connect 4 featuring a cryptographic ledger!
         </h2>
         <br />
-        <img src="static/images/4Chain_Greeting.png" style={imgStyle} width="200px" alt="Zombie rising from grave" />
+        <img src="static/images/4Chain_Greeting.png" style={imgStyle} width="200px" alt="Hardcore 4Chain enthusiasts" />
         <br /> <br />
         <p style={{ textAlign: "center" }}>
           This blockchain game allows you to play Connect 4 for money using the Ethereum blockchain.

@@ -32,7 +32,6 @@ class ActionButton extends Component {
     const pathName = this.props.pathname;
     const buttonLabel = this.props.buttonLabel;
 
-    //console.log("button label", this.props.buttonLabel, pathName, zombieData);
     return (
       <Link
         to={{
