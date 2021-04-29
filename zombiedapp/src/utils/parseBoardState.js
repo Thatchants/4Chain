@@ -9,9 +9,9 @@ export function parseBoard(s) {
   for (var i = 0; i < BOARD_HEIGHT; i++) {
       let row = []
       for (var j = 0; j < BOARD_WIDTH; j++) {
-        let ind = i * j * ITEM_BITS + ITEM_BITS - 1; //find the char that represents a slot's value
+        let ind = (i * ITEM_BITS) + (j * ITEM_BITS * i) + ITEM_BITS - 1; //find the char that represents a slot's value
         let val = parseInt(s.charAt(ind), 16);
-        row.push(val);
+        row.unshift(val);
       }
       board.push(row);
   }

@@ -22,6 +22,7 @@ contract GameFactory is Ownable {
 
     event NewInvite(uint256 id, address player1, address player2);
     event GameForfeited(uint256 id, address player1, address player2);
+    event GameWon(uint256 id, address player1, address player2);
     
     //even turns should be player 2
     modifier isTheirTurn(uint256 key) {
@@ -117,7 +118,7 @@ contract GameFactory is Ownable {
             delete playerToKey[theGame.player1];
             delete playerToKey[theGame.player2];
             msg.sender.transfer(theGame.pot);
-            emit GameForfeited(theGame.key, theGame.player1, theGame.player2);
+            emit GameWon(theGame.key, theGame.player1, theGame.player2);
             delete keyToGame[key];
         }
     }

@@ -29,9 +29,6 @@ main()
 
 npx hardhat run --network rinkeby scripts/deploy.js
 Deploying contracts with the account: 0x13ad4281ef916a79b31a4451C3b05136C5a2E9e6
-Account balance: 1434727506999999950
-4Chain contract address: 0xf2702354298bCC382300712Ffd535109e2B52FeF
-
-
-
+Account balance: 1432559634999998900
+4Chain contract address: 0x78c6A275EF160E758A34185784FbE5B1556eD25F
  */

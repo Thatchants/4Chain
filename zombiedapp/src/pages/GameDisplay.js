@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Button, Header, Icon, Form, Message, Label } from "semantic-ui-react";
 
+import {parseBoard} from "../utils/parseBoardState";
+
 import getGameCount from "../utils/getGameCount";
 
 import { truncate } from "../utils/truncate";
@@ -23,7 +25,22 @@ class GameDisplay extends Component {
     value: "",
     message: "",
     errorMessage: "",
-    loading: false
+    loading: false,
+    refreshLoading: false,
+    board: [[],[],[],[],[],[]]
+    
+  };
+
+  onRefresh = async () => {
+    await this.setState({ refreshLoading: true});
+    let data = await this.props.CZ.getGameState(this.props.location.state.gameNumber);
+    console.log(data);
+    let board = parseBoard(data);
+    await this.setState({ board: board, refreshLoading: false});
+  }
+
+  componentDidMount = async () => {
+    await this.onRefresh();
   };
 
 
@@ -59,7 +76,8 @@ class GameDisplay extends Component {
     return (
       <div>
         <Header as='h1' content={this.props.location.state.player1 + " VS " + this.props.location.state.player2} ></Header>
-        {this.props.location.state.boardState}
+        {this.state.board}
+        <Button primary circular loading={this.state.refreshLoading} icon='sync' onClick={this.onRefresh}/>
         <Form onSubmit={this.onMove} error={!!this.state.errorMessage}>
             <Form.Field>
               <label>Move</label>
@@ -81,7 +99,6 @@ class GameDisplay extends Component {
             <hr />
             <h2>{this.state.message}</h2>
           </Form>
-        
       </div>
     );
   }

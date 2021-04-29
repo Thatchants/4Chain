@@ -317,6 +317,28 @@ const initBlockchain = async () => {
         "anonymous": false,
         "inputs": [
           {
+            "indexed": false,
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "name": "player1",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "name": "player2",
+            "type": "address"
+          }
+        ],
+        "name": "GameWon",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
             "indexed": true,
             "name": "previousOwner",
             "type": "address"
@@ -333,7 +355,7 @@ const initBlockchain = async () => {
     ]`);
 
    // CZ = new ethers.Contract('0xf01b5d859b2a73DBE407f4553b06ffF50F19b7e4', abi, signer);
-    CZ = new ethers.Contract('0xf2702354298bCC382300712Ffd535109e2B52FeF', abi, signer);
+    CZ = new ethers.Contract('0x78c6A275EF160E758A34185784FbE5B1556eD25F', abi, signer);
     // put state data into the REDUX store for easy access from other pages and components
 
     let data = { provider, signer, CZ, userAddress };
