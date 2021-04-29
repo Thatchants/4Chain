@@ -190,17 +190,8 @@ contract GameFactory is Ownable {
         
         
         //check right diagonal
-        
         int signedCol = moveCol;
-        /*
-        if (moveRow < 3 && moveCol-moveRow < 4 && signedCol-moveRow > -3) {
-            //check right diagonal
-            if (theGame.board[moveRow+1][moveCol+1] == value && theGame.board[moveRow+2][moveCol+2] == value && theGame.board[moveRow+3][moveCol+3] == value) {
-                return true;
-            }
-        }
-        */
-        if (moveCol-moveRow < 4 && signedCol-moveRow > -3){
+        if (signedCol-moveRow < 4 && signedCol-moveRow > -3){
             int8 count = 1;
             int8 row = int8(moveRow)-1;
             int8 col = int8(moveCol)-1;
@@ -225,15 +216,34 @@ contract GameFactory is Ownable {
                 col++;
             }
             if(count>3)return true;
-            
         }
         
         //check left diagonal
-        if (moveRow < 3 && moveCol+moveRow < 9 && moveCol+moveRow > 2) {
-            //check left diagonal
-            if (theGame.board[moveRow+1][moveCol-1] == value && theGame.board[moveRow+2][moveCol-2] == value && theGame.board[moveRow+3][moveCol-3] == value) {
-                return true;
+        if (moveCol+moveRow < 9 && moveCol+moveRow > 2){
+            int8 count = 1;
+            int8 row = int8(moveRow)+1;
+            int8 col = int8(moveCol)-1;
+            while(row < 6 && col > -1){
+                if (theGame.board[uint(row)][uint(col)] == value){
+                    count++;
+                }else{
+                    break;
+                }
+                row++;
+                col--;
             }
+            row = int8(moveRow) - 1;
+            col = int8(moveCol) + 1;
+            while(row > -1 && col < 7){
+                if (theGame.board[uint(row)][uint(col)] == value){
+                    count++;
+                }else{
+                    break;
+                }
+                row--;
+                col++;
+            }
+            if(count>3)return true;
         }
         
         keyToGame[key].lastPlayedTimestamp = now;
