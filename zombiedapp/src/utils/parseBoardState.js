@@ -1,19 +1,14 @@
-
 export function parseBoard(s) {
-  // cut off initial 0x
-  s = s.substring(2, s.length)
-  let board = []
-  let BOARD_HEIGHT = 6;
-  let BOARD_WIDTH = 7;
-  let ITEM_BITS = 64;
-  for (var i = 0; i < BOARD_HEIGHT; i++) {
-      let row = []
-      for (var j = 0; j < BOARD_WIDTH; j++) {
-        let ind = (i * ITEM_BITS) + (j * ITEM_BITS * i) + ITEM_BITS - 1; //find the char that represents a slot's value
-        let val = parseInt(s.charAt(ind), 16);
-        row.unshift(val);
-      }
-      board.push(row);
-  }
-  return board;
+    s = s.substring(2, s.length)
+    
+    let board = [];
+    for(var i = 0;i < s.length-63;i+=64){
+        board.push(parseInt(s.charAt(i+63, 16)));
+    }
+    
+    let board2D = [];
+    for(var i = 0;i < board.length;i+=7){
+        board2D.push([board[i],board[i+1],board[i+2],board[i+3],board[i+4],board[i+5],board[i+6]]);
+    }
+    return board2D;
 }
