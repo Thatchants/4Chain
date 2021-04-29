@@ -191,7 +191,7 @@ contract GameFactory is Ownable {
         
         //check right diagonal
         int signedCol = moveCol;
-        if (moveCol-moveRow < 4 && signedCol-moveRow > -3) {
+        if (moveRow < 3 && moveCol-moveRow < 4 && signedCol-moveRow > -3) {
             //check right diagonal
             if (theGame.board[moveRow+1][moveCol+1] == value && theGame.board[moveRow+2][moveCol+2] == value && theGame.board[moveRow+3][moveCol+3] == value) {
                 return true;
@@ -199,7 +199,7 @@ contract GameFactory is Ownable {
         }
         
         //check left diagonal
-        if (moveCol+moveRow < 9 && moveCol+moveRow > 2) {
+        if (moveRow < 3 && moveCol+moveRow < 9 && moveCol+moveRow > 2) {
             //check left diagonal
             if (theGame.board[moveRow+1][moveCol-1] == value && theGame.board[moveRow+2][moveCol-2] == value && theGame.board[moveRow+3][moveCol-3] == value) {
                 return true;
