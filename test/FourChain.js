@@ -142,5 +142,45 @@ describe("FourChain", function () {
             await expect(FCInstance.connect(bob).move(gameIds[0], 6, { from: bob.address })).to.be.reverted;
         });
     });
+    
+    describe("Win Checking", function () {
+        it("Win Vertical", async () => {
+            await FCInstance.createGame(bob.address, {value: 500});
+            await FCInstance.connect(bob).accept(gameIds[0], 1, {value: 500});
+            await FCInstance.move(gameIds[0], 6, { from: alice.address });
+            await FCInstance.connect(bob).move(gameIds[0], 1, { from: bob.address });
+            await FCInstance.move(gameIds[0], 6, { from: alice.address });
+            await FCInstance.connect(bob).move(gameIds[0], 1, { from: bob.address });
+            await FCInstance.move(gameIds[0], 6, { from: alice.address });
+            await expect(await FCInstance.connect(bob).move(gameIds[0], 1, { from: bob.address })).to.changeEtherBalance(bob, 1000);
+        });
+        it("Win Horizontal", async () => {
+            await FCInstance.createGame(bob.address, {value: 500});
+            await FCInstance.connect(bob).accept(gameIds[0], 0, {value: 500});
+            await FCInstance.move(gameIds[0], 0, { from: alice.address });
+            await FCInstance.connect(bob).move(gameIds[0], 1, { from: bob.address });
+            await FCInstance.move(gameIds[0], 0, { from: alice.address });
+            await FCInstance.connect(bob).move(gameIds[0], 2, { from: bob.address });
+            await FCInstance.move(gameIds[0], 2, { from: alice.address });
+            await expect(await FCInstance.connect(bob).move(gameIds[0], 3, { from: bob.address })).to.changeEtherBalance(bob, 1000);
+        });
+        
+        it("Win Diagonal Right", async () => {
+            await FCInstance.createGame(bob.address, {value: 500});
+            await FCInstance.connect(bob).accept(gameIds[0], 1, {value: 500});
+            await FCInstance.move(gameIds[0], 1, { from: alice.address });
+            await FCInstance.connect(bob).move(gameIds[0], 2, { from: bob.address });
+            await FCInstance.move(gameIds[0], 1, { from: alice.address });
+            await FCInstance.connect(bob).move(gameIds[0], 1, { from: bob.address });
+            await FCInstance.move(gameIds[0], 3, { from: alice.address });
+            await FCInstance.connect(bob).move(gameIds[0], 2, { from: bob.address });
+            await FCInstance.move(gameIds[0], 1, { from: alice.address });
+            await FCInstance.connect(bob).move(gameIds[0], 2, { from: bob.address });
+            await FCInstance.move(gameIds[0], 2, { from: alice.address });
+            await FCInstance.connect(bob).move(gameIds[0], 3, { from: bob.address });
+            await FCInstance.move(gameIds[0], 3, { from: alice.address });
+            await expect(await FCInstance.connect(bob).move(gameIds[0], 4, { from: bob.address })).to.changeEtherBalance(bob, 1000);
+        });
+    });
 
 })
