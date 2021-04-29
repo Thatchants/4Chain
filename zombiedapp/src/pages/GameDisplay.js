@@ -34,7 +34,6 @@ class GameDisplay extends Component {
   onRefresh = async () => {
     await this.setState({ refreshLoading: true});
     let data = await this.props.CZ.getGameState(this.props.location.state.gameNumber);
-    console.log(data);
     let board = parseBoard(data);
     await this.setState({ board: board, refreshLoading: false});
   }
