@@ -111,7 +111,7 @@ contract GameFactory is Ownable {
         _;
     }
 
-    function move(uint256 key, uint8 moveCol) external payable isTheirTurn(key) isNotStart(key) validMove(key, moveCol){
+    function move(uint256 key, uint8 moveCol) external isTheirTurn(key) isNotStart(key) validMove(key, moveCol){
         if(play(key, moveCol)){
             Game storage theGame = keyToGame[key];
             delete playerToKey[theGame.player1];
