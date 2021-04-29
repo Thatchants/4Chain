@@ -111,14 +111,20 @@ contract GameFactory is Ownable {
         _;
     }
 
-    function move(uint256 key, uint8 moveCol) external isTheirTurn(key) isNotStart(key) validMove(key, moveCol){
-        play(key, moveCol);
+    function move(uint256 key, uint8 moveCol) external payable isTheirTurn(key) isNotStart(key) validMove(key, moveCol){
+        if(play(key, moveCol)){
+            Game storage theGame = keyToGame[key];
+            delete playerToKey[theGame.player1];
+            delete playerToKey[theGame.player2];
+            msg.sender.transfer(theGame.pot);
+            emit GameForfeited(theGame.key, theGame.player1, theGame.player2);
+            delete keyToGame[key];
+        }
     }
 
-    function play(uint256 key, uint8 moveCol) internal {
+    function play(uint256 key, uint8 moveCol) internal returns (bool wonGame){
         keyToGame[key].turn++;
         
-
         // here use moveCol to play a token in a certain col, type based on whose turn it is
         // npx hardhat compile currently produces a warning since moveCol is currently unused
         Game storage theGame = keyToGame[key];
@@ -126,22 +132,84 @@ contract GameFactory is Ownable {
         if (msg.sender == theGame.player2){
             value = 2;
         }
-        if(theGame.board[5][moveCol]==0) {theGame.board[5][moveCol]=value;}
-        else if(theGame.board[4][moveCol]==0) {theGame.board[4][moveCol]=value;}
-        else if(theGame.board[3][moveCol]==0) {theGame.board[3][moveCol]=value;}
-        else if(theGame.board[2][moveCol]==0) {theGame.board[2][moveCol]=value;}
-        else if(theGame.board[1][moveCol]==0) {theGame.board[1][moveCol]=value;}
-        else {theGame.board[0][moveCol]=value;}
+        
+        uint8 moveRow = 0;
+        if(theGame.board[5][moveCol]==0) 
+        {
+            theGame.board[5][moveCol]=value;
+            moveRow = 5;
+        }
+        else if(theGame.board[4][moveCol]==0) 
+        {
+            theGame.board[4][moveCol]=value;
+            moveRow = 4;
+            
+        }
+        else if(theGame.board[3][moveCol]==0) 
+        {
+            theGame.board[3][moveCol]=value;
+            moveRow = 3;
+        }
+        else if(theGame.board[2][moveCol]==0) {
+            theGame.board[2][moveCol]=value;
+            moveRow = 2;
+        }
+        else if(theGame.board[1][moveCol]==0) {
+            theGame.board[1][moveCol]=value;
+            moveRow = 1;
+        }
+        else 
+        {
+            theGame.board[0][moveCol]=value;
+            moveRow = 0;
+        }
 
         //calculate moveRow (first available row. Start with theGame.board[6][moveCol] as that is the bottom then [5] [4]...[0])
-        //check horizontal
-        //check vertical
-        //check top left to bottom right diagonal if possible
-        //check top right to bottom left diagonal if possible
-
+        
+        //check vertical - col -1
+        if (moveRow < 3) {
+            if(theGame.board[moveRow+1][moveCol] == value && theGame.board[moveRow+2][moveCol] == value && theGame.board[moveRow+3][moveCol] == value && theGame.board[moveRow+4][moveCol] == value) 
+            {
+                return true;
+            }
+        }
+        //check horizontal - row + 1 and/or row -1
+        uint8 counter = 0;
+        for (uint8 i = 0;i < 7;i++) {
+            
+            if (theGame.board[moveRow][i] == value) {
+                //check if the next 3 slots are the same
+               counter++;
+               if (counter == 4) {
+                   return true;
+               }
+            }
+            else 
+                counter = 0;
+        }
+        
+        
+        //check right diagonal
+        int signedCol = moveCol;
+        if (moveCol-moveRow < 4 && signedCol-moveRow > -3) {
+            //check right diagonal
+            if (theGame.board[moveRow+1][moveCol+1] == value && theGame.board[moveRow+2][moveCol+2] == value && theGame.board[moveRow+3][moveCol+3] == value) {
+                return true;
+            }
+        }
+        
+        //check left diagonal
+        if (moveCol+moveRow < 9 && moveCol+moveRow > 2) {
+            //check left diagonal
+            if (theGame.board[moveRow+1][moveCol-1] == value && theGame.board[moveRow+2][moveCol-2] == value && theGame.board[moveRow+3][moveCol-3] == value) {
+                return true;
+            }
+        }
+        
         keyToGame[key].lastPlayedTimestamp = now;
+        return false;
     }
-
+    
     function getGameCount() external view returns (uint256 count) {
         return playerToKey[msg.sender].length;
     }
