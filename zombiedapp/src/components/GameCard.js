@@ -4,9 +4,17 @@ import ReactTooltip from "react-tooltip";
 import ActionButton from "./ActionButton";
 import GameCardContent from "./GameCardContent";
 
+import { connect } from "react-redux";
+
 let WEEK_MS = 7 * 24 * 60 * 60 * 1000;
 
 let EXPIRY_TIME = 1 * WEEK_MS
+
+function mapStateToProps(state) {
+  return {
+    CZ: state.CZ
+  };
+}
 
 class GameCard extends Component {
   state = {
@@ -18,6 +26,10 @@ class GameCard extends Component {
   }
 
   handleClose = () => this.setState({ modalOpen: false });
+
+  onForfeit = async () => {
+    await this.props.CZ.claimForfeit(this.props.gameNumber);
+  }
 
   render() {
     // define the button labels used in <ActionButton> further on down in the code
@@ -59,12 +71,11 @@ class GameCard extends Component {
                 buttonLabel={moveButton}
                 data={this.props}
               />
-              <ActionButton
-                  pathname="/ClaimForfeit"
-                  buttonLabel={claimForfeitButton}
-                  data={this.props}
-                  disableMe={new Date() - new Date(this.props.lastPlay) < EXPIRY_TIME}
-              />
+              <Button primary onClick={this.onForfeit} disabled={new Date() - new Date(this.props.lastPlay) < EXPIRY_TIME}>
+              <div>
+                Claim Forfeit
+              </div>
+              </Button>
                 
               
 
@@ -81,4 +92,4 @@ class GameCard extends Component {
   }
 }
 
-export default GameCard;
+export default connect(mapStateToProps)(GameCard);

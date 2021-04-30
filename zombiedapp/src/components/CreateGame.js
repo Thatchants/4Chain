@@ -3,6 +3,7 @@ import getGameCount from "../utils/getGameCount";
 import { connect } from "react-redux";
 
 import { Button, Header, Icon, Modal, Form, Message } from "semantic-ui-react";
+import { ethers } from "ethers";
 
 function mapStateToProps(state) {
     return {
@@ -12,14 +13,13 @@ function mapStateToProps(state) {
     };
 }
 
-
 // Create a new Game
 
 class CreateGame extends Component {
   state = {
     modalOpen: false,
     value: "",
-    bet: 0,
+    bet: "",
     message: "",
     errorMessage: "",
     loading: false
@@ -37,7 +37,7 @@ class CreateGame extends Component {
       message: "waiting for blockchain transaction to complete..."
     });
     try {
-      await this.props.CZ.createGame(this.state.value, {value: this.state.bet}) // contains the opponent's address
+      await this.props.CZ.createGame(this.state.value, {value: ethers.utils.parseEther(this.state.bet)}) // contains the opponent's address
       this.setState({
         loading: false,
         message: "You have sent out a new game invite"
@@ -83,16 +83,16 @@ class CreateGame extends Component {
             <Form.Field>
             <label>Bet Amount</label>
               <input
-                placeholder="Amount in wei"
+                placeholder="Amount in ETH"
                 onChange={event =>
                   this.setState({
-                    bet: parseInt(event.target.value)
+                    bet: event.target.value
                   })
                 }
               />
             </Form.Field>
             <Message error header="Oops!" content={this.state.errorMessage} />
-            <Button primary type="submit" loading={this.state.loading} disabled={this.state.bet < 0}>
+            <Button primary type="submit" loading={this.state.loading} disabled={this.state.bet == ""}>
               <Icon name="check" />
               Create Game
             </Button>
