@@ -13,7 +13,6 @@ import getGameCount from "../utils/getGameCount";
 
 import { truncate } from "../utils/truncate";
 import { ethers } from "ethers";
-import '../CSS/board.css'
 
 /* global BigInt */
 
