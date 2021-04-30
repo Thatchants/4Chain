@@ -196,6 +196,35 @@ describe("FourChain", function () {
             await FCInstance.connect(bob).move(gameIds[0], 2, { from: bob.address });
             await expect(await FCInstance.move(gameIds[0], 3, { from: alice.address })).to.changeEtherBalance(alice, 1000);
         });
+
+        it("Check Tie", async () => {
+            await FCInstance.createGame(bob.address, {value: 500});
+            for(var i = 0;i < 3;i++){
+                for(var k = 0;k < 3;k++){
+                    if(i%2 == 0){
+                        if(i == 0 && k == 0){
+                            await FCInstance.connect(bob).accept(gameIds[0], 2*k, {value: 500});
+                        }else{
+                            await FCInstance.connect(bob).move(gameIds[0], 2*k, { from: bob.address });
+                        }
+                        await FCInstance.move(gameIds[0], 2*k+1, { from: alice.address });
+                        await FCInstance.connect(bob).move(gameIds[0], 2*k, { from: bob.address });
+                        await FCInstance.move(gameIds[0], 2*k+1, { from: alice.address });
+                    }else{
+                        await FCInstance.connect(bob).move(gameIds[0], 2*k+1, { from: bob.address });
+                        await FCInstance.move(gameIds[0], 2*k, { from: alice.address });
+                        await FCInstance.connect(bob).move(gameIds[0], 2*k+1, { from: bob.address });
+                        await FCInstance.move(gameIds[0], 2*k, { from: alice.address });
+                    }
+                }
+            }
+            await FCInstance.connect(bob).move(gameIds[0], 6, { from: bob.address });
+            await FCInstance.move(gameIds[0], 6, { from: alice.address });
+            await FCInstance.connect(bob).move(gameIds[0], 6, { from: bob.address });
+            await FCInstance.move(gameIds[0], 6, { from: alice.address });
+            await FCInstance.connect(bob).move(gameIds[0], 6, { from: bob.address });
+            await expect(await FCInstance.move(gameIds[0], 6, { from: alice.address })).to.changeEtherBalance(bob, 500);
+        });
     });
 
 })

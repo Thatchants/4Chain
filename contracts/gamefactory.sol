@@ -23,6 +23,7 @@ contract GameFactory is Ownable {
     event NewInvite(uint256 id, address player1, address player2);
     event GameForfeited(uint256 id, address player1, address player2);
     event GameWon(uint256 id, address player1, address player2);
+    event GameTied(uint256 id, address player1, address player2);
     
     //even turns should be player 2
     modifier isTheirTurn(uint256 key) {
@@ -120,6 +121,19 @@ contract GameFactory is Ownable {
             msg.sender.transfer(theGame.pot);
             emit GameWon(theGame.key, theGame.player1, theGame.player2);
             delete keyToGame[key];
+        } else {
+            Game storage theGame = keyToGame[key];
+            if (theGame.turn >= 42) {
+                delete playerToKey[theGame.player1];
+                delete playerToKey[theGame.player2];
+                address payable addr1 = address(uint160(theGame.player1));
+                address payable addr2 = address(uint160(theGame.player2));
+                uint256 ammt = theGame.pot / 2;
+                addr1.transfer(ammt);
+                addr2.transfer(ammt);
+                emit GameTied(theGame.key, theGame.player1, theGame.player2);
+                delete keyToGame[key];
+            }
         }
     }
 
@@ -206,7 +220,7 @@ contract GameFactory is Ownable {
                 col--;
             }
             row = int8(moveRow) + 1;
-            row = int8(moveCol) + 1;
+            col = int8(moveCol) + 1;
             while(row < 6 && col < 7){
                 if (theGame.board[uint(row)][uint(col)] == value){
                     count++;
