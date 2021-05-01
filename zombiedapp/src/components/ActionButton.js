@@ -19,6 +19,7 @@ class ActionButton extends Component {
   render() {
     const gameData = {
       gameNumber: this.props.data.gameNumber,
+      finishState: this.props.data.finishState,
       player1: this.props.data.player1,
       player2: this.props.data.player2,
       turn: this.props.data.turn,

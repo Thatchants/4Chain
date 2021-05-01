@@ -133,7 +133,7 @@ class GameDisplay extends Component {
           {this.state.board.map((r, i) => {return <Grid.Row key={i}>
             {r.map((v, j) => { return (
                 <Grid.Column key={j} color="blue">
-                  <Icon color={v == 2 ? "yellow" : (v == 1 ? "red" : "white")} size="huge" name="circle" onClick={() => this.play(j)}/>
+                  <Icon color={v == 2 ? "yellow" : (v == 1 ? "red" : "white")} size="huge" name="circle" onClick={() => { if (this.props.location.state.finishState == 0) this.play(j)}}/>
                   
                 </Grid.Column>)})}
           </Grid.Row>})}
