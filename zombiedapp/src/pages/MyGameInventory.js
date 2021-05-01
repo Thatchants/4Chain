@@ -58,6 +58,7 @@ class MyGameInventory extends Component {
           <GameCard
             key={id}
             gameNumber={id}
+            finishState={game.finishState}
             player1={game.player1}
             player2={game.player2}
             turn={game.turn}
@@ -90,7 +91,7 @@ class MyGameInventory extends Component {
           
           <Grid.Row style={{paddingTop:0}}>
             <Grid.Column>
-              Clicking anywhere on a card will bring up a list of actions you can perform. It is your turn in games with green cards.
+              Clicking anywhere on a card will bring up a list of actions you can perform. It is your turn in blue games, and your opponent's in orange. Green games ended in wins, red games were losses, and yellow games were ties.
             </Grid.Column>
           </Grid.Row>
           

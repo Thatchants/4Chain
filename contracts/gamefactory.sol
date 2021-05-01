@@ -6,6 +6,7 @@ import "./safemath.sol";
 contract GameFactory is Ownable {
     struct Game {
         uint256 key;
+        uint8 finishState;
         address player1;
         address player2;
         uint8 turn;
@@ -74,7 +75,7 @@ contract GameFactory is Ownable {
         gamesMade = key;
         playerToKey[msg.sender].push(key);
         playerToKey[opponent].push(key);
-        keyToGame[key] = Game(key, msg.sender, opponent, 0, msg.value, now, [[0,0,0,0,0,0,0],
+        keyToGame[key] = Game(key, 0, msg.sender, opponent, 0, msg.value, now, [[0,0,0,0,0,0,0],
                                                                     [0,0,0,0,0,0,0],
                                                                     [0,0,0,0,0,0,0],
                                                                     [0,0,0,0,0,0,0],
@@ -85,7 +86,7 @@ contract GameFactory is Ownable {
 
     // used when accepting a proposed match
     // different from usual play since it requires payment
-    function accept(uint256 key, uint8 moveCol) external payable isTheirTurn(key) {
+    function accept(uint256 key, uint8 moveCol) external payable isTheirTurn(key) gameInPlay(key){
         Game storage theGame = keyToGame[key];
 
         // The opponent should offer at least the amount already in the pot
@@ -97,13 +98,15 @@ contract GameFactory is Ownable {
 
     // forfeits can be claimed when plays are not made by an opponent for over an expirationTime period
     // (default 1 week)
-    function claimForfeit(uint256 key) external expired(key) isNotTurn(key) {
+    function claimForfeit(uint256 key) external expired(key) isNotTurn(key) gameInPlay(key){
         Game storage theGame = keyToGame[key];
-        delete playerToKey[theGame.player1];
-        delete playerToKey[theGame.player2];
+        uint8 finishState = 1;
+        if(msg.sender == theGame.player2){
+            finishState = 2;
+        }
+        theGame.finishState = finishState;
         msg.sender.transfer(theGame.pot);
         emit GameForfeited(theGame.key, theGame.player1, theGame.player2);
-        delete keyToGame[key];
     }
     
     modifier validMove(uint256 key, uint8 moveCol) {
@@ -112,27 +115,33 @@ contract GameFactory is Ownable {
         require(theGame.board[0][moveCol] == 0, "That column is full.");
         _;
     }
+    
+    modifier gameInPlay(uint256 key) {
+        Game storage theGame = keyToGame[key];
+        require(theGame.finishState == 0, "You can't make a move or claim forfeit. This game is over.");
+        _;
+    }
 
-    function move(uint256 key, uint8 moveCol) external isTheirTurn(key) isNotStart(key) validMove(key, moveCol){
+    function move(uint256 key, uint8 moveCol) external isTheirTurn(key) isNotStart(key) validMove(key, moveCol) gameInPlay(key){
         if(play(key, moveCol)){
             Game storage theGame = keyToGame[key];
-            delete playerToKey[theGame.player1];
-            delete playerToKey[theGame.player2];
+            uint8 finishState = 1;
+            if(msg.sender == theGame.player2){
+                finishState = 2;
+            }
+            theGame.finishState = finishState;
             msg.sender.transfer(theGame.pot);
             emit GameWon(theGame.key, theGame.player1, theGame.player2);
-            delete keyToGame[key];
         } else {
             Game storage theGame = keyToGame[key];
             if (theGame.turn >= 42) {
-                delete playerToKey[theGame.player1];
-                delete playerToKey[theGame.player2];
                 address payable addr1 = address(uint160(theGame.player1));
                 address payable addr2 = address(uint160(theGame.player2));
+                theGame.finishState = 3;
                 uint256 ammt = theGame.pot / 2;
                 addr1.transfer(ammt);
                 addr2.transfer(ammt);
                 emit GameTied(theGame.key, theGame.player1, theGame.player2);
-                delete keyToGame[key];
             }
         }
     }
