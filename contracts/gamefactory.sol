@@ -86,7 +86,7 @@ contract GameFactory is Ownable {
 
     // used when accepting a proposed match
     // different from usual play since it requires payment
-    function accept(uint256 key, uint8 moveCol) external payable isTheirTurn(key) gameInPla(key){
+    function accept(uint256 key, uint8 moveCol) external payable isTheirTurn(key) gameInPlay(key){
         Game storage theGame = keyToGame[key];
 
         // The opponent should offer at least the amount already in the pot
@@ -119,6 +119,7 @@ contract GameFactory is Ownable {
     modifier gameInPlay(uint256 key) {
         Game storage theGame = keyToGame[key];
         require(theGame.finishState == 0, "You can't make a move or claim forfeit. This game is over.");
+        _;
     }
 
     function move(uint256 key, uint8 moveCol) external isTheirTurn(key) isNotStart(key) validMove(key, moveCol) gameInPlay(key){
