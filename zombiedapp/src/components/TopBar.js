@@ -43,7 +43,7 @@ class TopBar extends Component {
         </div>
         Your account address: {this.props.userAddress}
         <br />
-        You are currently playing {this.props.userGameCount} game(s) of Connect 4!
+        You have {this.props.userGameCount} game(s) of Connect 4!
         <hr />
       </div>
     );
